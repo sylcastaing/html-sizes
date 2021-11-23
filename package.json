@@ -1,0 +1,59 @@
+{
+  "name": "html-sizes",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": "Sylvain Castaing",
+  "main": "dist/index.js",
+  "module": "dist/html-sizes.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "dts lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/html-sizes.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/html-sizes.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^7.0.3",
+    "@tsconfig/recommended": "^1.0.1",
+    "dts-cli": "^0.19.7",
+    "husky": "^7.0.4",
+    "size-limit": "^7.0.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2"
+  }
+}
