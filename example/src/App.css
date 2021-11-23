@@ -1,0 +1,32 @@
+.header {
+  position: relative;
+  height: 100vh;
+}
+
+.header img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+  padding: 30px;
+}
+
+@media screen and (max-width: 900px) {
+    .cards {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        grid-gap: 15px;
+    }
+}
+
+.cards img {
+    width: 100%;
+}
