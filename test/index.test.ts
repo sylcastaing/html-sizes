@@ -36,7 +36,20 @@ describe('generateSizes', () => {
     );
   });
 
-  it('with maxDPR 2', () => {
+  it('with simple maxDPR 2', () => {
+    expect(
+      generateSizes(
+        {
+          default: '100vw',
+        },
+        {
+          maxDPR: 2,
+        },
+      ),
+    ).toBe('(min-resolution: 3dppx) 67vw, (-webkit-min-device-pixel-ratio: 3) 67vw, 100vw');
+  });
+
+  it('with complex maxDPR 2', () => {
     expect(
       generateSizes(
         {
@@ -57,6 +70,7 @@ describe('generateSizes', () => {
         {
           default: '500px',
         },
+        // @ts-ignore
         { maxDPR: 3 },
       ),
     ).toBe('500px');

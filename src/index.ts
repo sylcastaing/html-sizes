@@ -1,6 +1,7 @@
 const availableDPR = [3, 2, 1] as const;
 
 export type SizesDPR = typeof availableDPR[number];
+export type MaxDPR = Exclude<SizesDPR, 3>;
 
 const vwRegex = /^([0-9]*)vw$/;
 const pxRegex = /^([0-9]*)px$/;
@@ -12,7 +13,7 @@ export interface SizesParams {
 }
 
 export interface SizesOptions {
-  maxDPR?: SizesDPR;
+  maxDPR?: MaxDPR;
   dpiCompatibility?: boolean;
 }
 
