@@ -1,6 +1,6 @@
 export type SizesValue = `${number}vw` | `${number}px` | `calc(${string})`;
 
-const availableDPR = [1, 2, 3] as const;
+const availableDPR = [3, 2, 1] as const;
 
 export type SizesDPR = typeof availableDPR[number];
 
