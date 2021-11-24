@@ -18,11 +18,7 @@ export interface SizesOptions {
   dpiCompatibility?: boolean;
 }
 
-function scaleSizeFromDPR(
-  dpr: SizesDPR,
-  maxDPR: SizesDPR,
-  value: SizesValue
-): SizesValue {
+function scaleSizeFromDPR(dpr: SizesDPR, maxDPR: SizesDPR, value: SizesValue): SizesValue {
   const vwMatch = value.match(vwRegex);
 
   if (vwMatch && vwMatch[1]) {
@@ -49,7 +45,7 @@ function getBreakpointDPRMediaQueries(
   value: SizesValue,
   dpr: SizesDPR,
   maxDPR: SizesDPR,
-  dpiCompatibility: boolean = false
+  dpiCompatibility: boolean = false,
 ) {
   const scaledValue = scaleSizeFromDPR(dpr, maxDPR, value);
 
@@ -58,60 +54,36 @@ function getBreakpointDPRMediaQueries(
     `(-webkit-min-device-pixel-ratio: ${dpr})`,
     dpiCompatibility ? `(min-resolution: ${96 * dpr}dpi)` : '',
   ]
-    .filter((mediaQuery) => !!mediaQuery)
-    .map(
-      (mediaQuery) =>
-        `${mediaQuery}${breakpoint ? ` and ${breakpoint} ` : ' '}${scaledValue}`
-    )
+    .filter(mediaQuery => !!mediaQuery)
+    .map(mediaQuery => `${mediaQuery}${breakpoint ? ` and ${breakpoint} ` : ' '}${scaledValue}`)
     .join(', ');
 }
 
-function getBreakpointValue(
-  value: SizesValue,
-  { maxDPR, dpiCompatibility }: SizesOptions,
-  breakpoint?: string
-) {
+function getBreakpointValue(value: SizesValue, { maxDPR, dpiCompatibility }: SizesOptions, breakpoint?: string) {
   const breakPointValue = breakpoint ? `${breakpoint} ${value}` : value;
 
   if (maxDPR) {
     const capedDPRBreakpoints = availableDPR
-      .filter((dpr) => dpr > maxDPR)
-      .map((dpr) =>
-        getBreakpointDPRMediaQueries(
-          breakpoint,
-          value,
-          dpr,
-          maxDPR,
-          dpiCompatibility
-        )
-      )
+      .filter(dpr => dpr > maxDPR)
+      .map(dpr => getBreakpointDPRMediaQueries(breakpoint, value, dpr, maxDPR, dpiCompatibility))
       .join(',');
 
-    return capedDPRBreakpoints.length > 0
-      ? `${capedDPRBreakpoints}, ${breakPointValue}`
-      : breakPointValue;
+    return capedDPRBreakpoints.length > 0 ? `${capedDPRBreakpoints}, ${breakPointValue}` : breakPointValue;
   } else {
     return breakPointValue;
   }
 }
 
-function generateSizes(
-  params: SizesParams,
-  options: SizesOptions = {}
-): string {
+function generateSizes(params: SizesParams, options: SizesOptions = {}): string {
   const { default: receivedDefaultValue, ...breakpoints } = params;
 
   const breakpointsValue = Object.keys(breakpoints)
-    .map((breakpoint) =>
-      getBreakpointValue(breakpoints[breakpoint], options, breakpoint)
-    )
+    .map(breakpoint => getBreakpointValue(breakpoints[breakpoint], options, breakpoint))
     .join(`, `);
 
   const defaultValue = getBreakpointValue(receivedDefaultValue, options);
 
-  return breakpointsValue.length > 0
-    ? `${breakpointsValue}, ${defaultValue}`
-    : defaultValue;
+  return breakpointsValue.length > 0 ? `${breakpointsValue}, ${defaultValue}` : defaultValue;
 }
 
 export default generateSizes;
