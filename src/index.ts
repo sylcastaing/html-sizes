@@ -1,5 +1,3 @@
-export type SizesValue = `${number}vw` | `${number}px` | `calc(${string})`;
-
 const availableDPR = [3, 2, 1] as const;
 
 export type SizesDPR = typeof availableDPR[number];
@@ -9,8 +7,8 @@ const pxRegex = /^([0-9]*)px$/;
 const calcRegex = /^calc\((.*)\)$/;
 
 export interface SizesParams {
-  [key: string]: SizesValue;
-  default: SizesValue;
+  [key: string]: string;
+  default: string;
 }
 
 export interface SizesOptions {
@@ -18,31 +16,30 @@ export interface SizesOptions {
   dpiCompatibility?: boolean;
 }
 
-function scaleSizeFromDPR(dpr: SizesDPR, maxDPR: SizesDPR, value: SizesValue): SizesValue {
+function scaleSizeFromDPR(dpr: SizesDPR, maxDPR: SizesDPR, value: string): string {
   const vwMatch = value.match(vwRegex);
 
+  const ratio = maxDPR / dpr;
+
   if (vwMatch && vwMatch[1]) {
-    return `${Math.ceil((parseInt(vwMatch[1], 10) * maxDPR) / dpr)}vw`;
+    return `${Math.ceil(parseInt(vwMatch[1], 10) * ratio)}vw`;
   }
 
   const pxMatch = value.match(pxRegex);
 
   if (pxMatch && pxMatch[1]) {
-    return `${Math.ceil((parseInt(pxMatch[1], 10) * maxDPR) / dpr)}px`;
+    return `${Math.ceil(parseInt(pxMatch[1], 10) * ratio)}px`;
   }
 
   const calcMatch = value.match(calcRegex);
 
-  if (calcMatch && calcMatch[1]) {
-    return `calc((${calcMatch[1]}) * ${maxDPR} / ${dpr})`;
-  }
-
-  return value;
+  // Scale calc value or other things (min, max etc...)
+  return `calc((${(calcMatch && calcMatch[1]) ?? value}) * ${Math.round(ratio * 100) / 100})`;
 }
 
 function getBreakpointDPRMediaQueries(
   breakpoint: string | undefined,
-  value: SizesValue,
+  value: string,
   dpr: SizesDPR,
   maxDPR: SizesDPR,
   dpiCompatibility: boolean = false,
@@ -59,7 +56,7 @@ function getBreakpointDPRMediaQueries(
     .join(', ');
 }
 
-function getBreakpointValue(value: SizesValue, { maxDPR, dpiCompatibility }: SizesOptions, breakpoint?: string) {
+function getBreakpointValue(value: string, { maxDPR, dpiCompatibility }: SizesOptions, breakpoint?: string) {
   const breakPointValue = breakpoint ? `${breakpoint} ${value}` : value;
 
   if (maxDPR) {

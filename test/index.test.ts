@@ -51,7 +51,18 @@ describe('generateSizes', () => {
     );
   });
 
-  it('maxDpr with calc', () => {
+  it('with maxDPR 3 -> no effect', () => {
+    expect(
+      generateSizes(
+        {
+          default: '500px',
+        },
+        { maxDPR: 3 },
+      ),
+    ).toBe('500px');
+  });
+
+  it('with maxDpr 2 and calc', () => {
     expect(
       generateSizes(
         {
@@ -60,7 +71,20 @@ describe('generateSizes', () => {
         { maxDPR: 2 },
       ),
     ).toBe(
-      '(min-resolution: 3dppx) calc((100vw - 20px) * 2 / 3), (-webkit-min-device-pixel-ratio: 3) calc((100vw - 20px) * 2 / 3), calc(100vw - 20px)',
+      '(min-resolution: 3dppx) calc((100vw - 20px) * 0.67), (-webkit-min-device-pixel-ratio: 3) calc((100vw - 20px) * 0.67), calc(100vw - 20px)',
+    );
+  });
+
+  it('with maxDpr 2 and min', () => {
+    expect(
+      generateSizes(
+        {
+          default: 'min(100vw - 20px, 500px)',
+        },
+        { maxDPR: 2 },
+      ),
+    ).toBe(
+      '(min-resolution: 3dppx) calc((min(100vw - 20px, 500px)) * 0.67), (-webkit-min-device-pixel-ratio: 3) calc((min(100vw - 20px, 500px)) * 0.67), min(100vw - 20px, 500px)',
     );
   });
 
@@ -79,31 +103,5 @@ describe('generateSizes', () => {
     ).toBe(
       '(min-resolution: 3dppx) and (max-width: 500px) 67vw, (-webkit-min-device-pixel-ratio: 3) and (max-width: 500px) 67vw, (min-resolution: 288dpi) and (max-width: 500px) 67vw, (max-width: 500px) 100vw, (min-resolution: 3dppx) 334px, (-webkit-min-device-pixel-ratio: 3) 334px, (min-resolution: 288dpi) 334px, 500px',
     );
-  });
-
-  it('unmatched value', () => {
-    expect(
-      generateSizes(
-        {
-          // @ts-ignore
-          '(max-width: 500px)': '100%',
-          default: '500px',
-        },
-        { maxDPR: 2 },
-      ),
-    ).toBe(
-      '(min-resolution: 3dppx) and (max-width: 500px) 100%, (-webkit-min-device-pixel-ratio: 3) and (max-width: 500px) 100%, (max-width: 500px) 100%, (min-resolution: 3dppx) 334px, (-webkit-min-device-pixel-ratio: 3) 334px, 500px',
-    );
-  });
-
-  it('maxDPR 3 no effect', () => {
-    expect(
-      generateSizes(
-        {
-          default: '500px',
-        },
-        { maxDPR: 3 },
-      ),
-    ).toBe('500px');
   });
 });
