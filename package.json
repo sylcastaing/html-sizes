@@ -1,6 +1,6 @@
 {
   "name": "html-sizes",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Html sizes generator with max DPR support",
   "homepage": "https://github.com/sylcastaing/html-sizes",
   "keywords": [
