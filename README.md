@@ -139,7 +139,7 @@ generateSizes(
   },
 );
 
-// Return : (min-resolution: 3dppx) 34vw, (-webkit-min-device-pixel-ratio: 3) 34vw,(min-resolution: 2dppx) 50vw, (-webkit-min-device-pixel-ratio: 2) 50vw, 100vw
+// Return : (min-resolution: 3dppx) 34vw, (-webkit-min-device-pixel-ratio: 3) 34vw, (min-resolution: 2dppx) 50vw, (-webkit-min-device-pixel-ratio: 2) 50vw, 100vw
 ```
 
 | DPR | Sizes              | Final image width      |

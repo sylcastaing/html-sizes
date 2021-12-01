@@ -64,7 +64,7 @@ function getBreakpointValue(value: string, { maxDPR, dpiCompatibility }: SizesOp
     const capedDPRBreakpoints = availableDPR
       .filter(dpr => dpr > maxDPR)
       .map(dpr => getBreakpointDPRMediaQueries(breakpoint, value, dpr, maxDPR, dpiCompatibility))
-      .join(',');
+      .join(', ');
 
     return capedDPRBreakpoints.length > 0 ? `${capedDPRBreakpoints}, ${breakPointValue}` : breakPointValue;
   } else {

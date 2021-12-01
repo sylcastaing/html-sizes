@@ -32,7 +32,7 @@ describe('generateSizes', () => {
         { maxDPR: 1 },
       ),
     ).toBe(
-      '(min-resolution: 3dppx) and (max-width: 340px) 34vw, (-webkit-min-device-pixel-ratio: 3) and (max-width: 340px) 34vw,(min-resolution: 2dppx) and (max-width: 340px) 50vw, (-webkit-min-device-pixel-ratio: 2) and (max-width: 340px) 50vw, (max-width: 340px) 100vw, (min-resolution: 3dppx) and (min-width: 400px) 12px, (-webkit-min-device-pixel-ratio: 3) and (min-width: 400px) 12px,(min-resolution: 2dppx) and (min-width: 400px) 18px, (-webkit-min-device-pixel-ratio: 2) and (min-width: 400px) 18px, (min-width: 400px) 35px, (min-resolution: 3dppx) 17vw, (-webkit-min-device-pixel-ratio: 3) 17vw,(min-resolution: 2dppx) 25vw, (-webkit-min-device-pixel-ratio: 2) 25vw, 50vw',
+      '(min-resolution: 3dppx) and (max-width: 340px) 34vw, (-webkit-min-device-pixel-ratio: 3) and (max-width: 340px) 34vw, (min-resolution: 2dppx) and (max-width: 340px) 50vw, (-webkit-min-device-pixel-ratio: 2) and (max-width: 340px) 50vw, (max-width: 340px) 100vw, (min-resolution: 3dppx) and (min-width: 400px) 12px, (-webkit-min-device-pixel-ratio: 3) and (min-width: 400px) 12px, (min-resolution: 2dppx) and (min-width: 400px) 18px, (-webkit-min-device-pixel-ratio: 2) and (min-width: 400px) 18px, (min-width: 400px) 35px, (min-resolution: 3dppx) 17vw, (-webkit-min-device-pixel-ratio: 3) 17vw, (min-resolution: 2dppx) 25vw, (-webkit-min-device-pixel-ratio: 2) 25vw, 50vw',
     );
   });
 
