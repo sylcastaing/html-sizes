@@ -44,15 +44,15 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.3",
+    "@size-limit/preset-small-lib": "^7.0.8",
     "@tsconfig/recommended": "^1.0.1",
-    "dts-cli": "^0.19.7",
+    "dts-cli": "^1.3.0",
     "husky": "^7.0.4",
     "np": "^7.6.0",
     "pinst": "^2.1.6",
-    "size-limit": "^7.0.3",
+    "size-limit": "^7.0.8",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.5"
   },
   "size-limit": [
     {
